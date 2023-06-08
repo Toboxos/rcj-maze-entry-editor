@@ -57,6 +57,7 @@ const timeFormatted = computed( () => {
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 });
 
+
 export function useScoring() {
     return {
         time,

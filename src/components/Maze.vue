@@ -57,15 +57,19 @@
     <div class="p-2" v-if="!editMode">
       <div>Actions:</div>
       <div class="p-2 border-2 border-black space-x-2">
-        <button class="btn p-2">Lack of Progress</button>
-        <button class="btn p-2">Checkpoint reached</button>
-        <button class="btn p-2">Checkpoint skipped</button>
-        <button class="btn p-2">Bumper passed</button>
-        <button class="btn p-2">Victim detected</button>
-        <button class="btn p-2">Rescue Kit deployed</button>
-        <button class="btn p-2">Ramp Up</button>
-        <button class="btn p-2">Ramp Down</button>
-        <button class="btn p-2">Exit-Bonus</button>
+        <button class="btn p-2" @click="actions.start()">Start</button>
+        <button class="btn p-2" @click="actions.stop()">Stop</button>
+        <button class="btn p-2" @click="actions.lackOfProgress()">Lack of Progress</button>
+      </div>
+      <div class="p-2 border-2 border-black space-x-2">
+        <button class="btn p-2" @click="actions.checkpointReached()">Checkpoint reached</button>
+        <button class="btn p-2" @click="actions.checkpointSkipped()">Checkpoint skipped</button>
+        <button class="btn p-2" @click="actions.bumperPassed()">Bumper passed</button>
+        <button class="btn p-2" @click="actions.victimDetected()">Victim detected</button>
+        <button class="btn p-2" @click="actions.deployedRescueKit()">Rescue Kit deployed</button>
+<!--        <button class="btn p-2">Ramp Up</button>-->
+<!--        <button class="btn p-2">Ramp Down</button>-->
+        <button class="btn p-2" @click="actions.exitFound()">Exit-Bonus</button>
       </div>
     </div>
 
@@ -89,9 +93,11 @@ import Tile from "./Tile.vue";
 import {useMaze} from "./maze.js";
 import {ref, watch} from "vue";
 import {useScoring} from "./scoring.js";
+import {useActions} from "./actions.js";
 
 const maze = useMaze();
 const scoring = useScoring();
+const actions = useActions();
 
 const selectedTile = ref(null);
 const victim = ref(false);
