@@ -11,12 +11,13 @@
         icon="fa-solid fa-plus"
         v-if="props.tile.victim" />
 
+    <!-- Bumper -->
+    <font-awesome-icon
+        class="absolute text-5xl text-amber-900 right-0 left-0 bottom-0 m-auto"
+        icon="fa-solid fa-minus"
+        v-if="props.tile.bumper" />
+
     <div class="inline" v-if="props.editMode === true">
-      <!-- Bumper -->
-      <font-awesome-icon
-          class="absolute text-5xl text-amber-900 right-0 left-0 bottom-0 m-auto"
-          icon="fa-solid fa-minus"
-          v-if="props.tile.bumper" />
 
       <!-- Edit iccons -->
       <font-awesome-icon
