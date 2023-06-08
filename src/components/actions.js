@@ -16,7 +16,7 @@ watch(actions, (newActions) => {
     // execute each action
     newActions.forEach( (action) => {
         setTimeout(() => {
-            action.execute();
+            action.execute(action.tile);
         }, 1);
     });
 });
@@ -35,8 +35,10 @@ function actionStart() {
     legWithoutLackOfProgress = true;
 }
 
-function actionCheckpointReached() {
+function actionCheckpointReached(tile) {
     scoring.numCheckpoints.value++;
+    tile.checkpointVisited = true;
+    console.log(tile);
 
     if( legWithoutLackOfProgress ) {
         scoring.numCheckpointsWithBonus.value++;
@@ -44,8 +46,9 @@ function actionCheckpointReached() {
     legWithoutLackOfProgress = true;
 }
 
-function actionCheckpointSkipped() {
+function actionCheckpointSkipped(tile) {
     legWithoutLackOfProgress = true;
+    tile.checkpointVisited = true;
 }
 
 function actionLackOfProgress() {
@@ -53,20 +56,24 @@ function actionLackOfProgress() {
     legWithoutLackOfProgress = false;
 }
 
-function actionBumperPassed() {
+function actionBumperPassed(tile) {
     scoring.numBumpersPassed.value++;
+    tile.bumperPassed = true;
 }
 
-function actionVictimDetected() {
+function actionVictimDetected(tile) {
     scoring.numVictimsDetected.value++;
+    tile.victimDetected = true;
 }
 
-function actionRescueKitDeployed() {
+function actionRescueKitDeployed(tile) {
     scoring.numRescueKitsDeployed.value++;
+    tile.rescueKitDeployed = true;
 }
 
-function actionExitBonus() {
+function actionExitBonus(tile) {
     scoring.exitBonusAchieved.value = true;
+    tile.exitFound = true;
 }
 
 export function useActions() {
@@ -85,6 +92,7 @@ export function useActions() {
             // push back start action
             actions.push({
                 execute: actionStart,
+                tile: null,
                 description: 'Run started',
                 timestamp: Date.now()
             });
@@ -100,20 +108,23 @@ export function useActions() {
 
             actions.push({
                 execute: () => {},
+                tile: null,
                 description: 'Run stopped',
                 timestamp: Date.now()
             });
         },
-        checkpointReached() {
+        checkpointReached(tile) {
             actions.push({
                 execute: actionCheckpointReached,
+                tile: tile,
                 description: 'Checkpoint reached (10p)' + (legWithoutLackOfProgress ? ' + First try (10p)' : ''),
                 timestamp: Date.now()
             });
         },
-        checkpointSkipped() {
+        checkpointSkipped(tile) {
             actions.push({
                 execute: actionCheckpointSkipped,
+                tile: tile,
                 description: 'Checkpoint skipped',
                 timestamp: Date.now()
             });
@@ -121,35 +132,40 @@ export function useActions() {
         lackOfProgress() {
             actions.push({
                 execute: actionLackOfProgress,
+                tile: null,
                 description: 'Lack of Progress',
                 timestamp: Date.now()
             });
         },
-        bumperPassed() {
+        bumperPassed(tile) {
             // push back bumper action
             actions.push({
                 execute: actionBumperPassed,
+                tile: tile,
                 description: 'Bumper passed (5p)',
                 timestamp: Date.now()
             });
         },
-        victimDetected() {
+        victimDetected(tile) {
             actions.push({
                 execute: actionVictimDetected,
+                tile: tile,
                 description: 'Victim detected (10p)',
                 timestamp: Date.now()
             });
         },
-        deployedRescueKit() {
+        deployedRescueKit(tile) {
             actions.push({
                 execute: actionRescueKitDeployed,
+                tile: tile,
                 description: 'Rescue Kit deployed (10p)',
                 timestamp: Date.now()
             });
         },
-        exitFound() {
+        exitFound(tile) {
             actions.push({
                 execute: actionExitBonus,
+                tile: tile,
                 description: 'Exit detected (20p)',
                 timestamp: Date.now()
             });

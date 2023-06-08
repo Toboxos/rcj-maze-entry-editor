@@ -66,14 +66,14 @@
         <button class="btn p-2" @click="actions.lackOfProgress()">Lack of Progress</button>
       </div>
       <div class="p-2 border-2 border-black space-x-2">
-        <button class="btn p-2" @click="actions.checkpointReached()" v-if="selectedTile.checkpoint">Checkpoint reached</button>
-        <button class="btn p-2" @click="actions.checkpointSkipped()" v-if="selectedTile.checkpoint">Checkpoint skipped</button>
-        <button class="btn p-2" @click="actions.bumperPassed()" v-if="selectedTile.bumper">Bumper passed</button>
-        <button class="btn p-2" @click="actions.victimDetected()" v-if="selectedTile.victim">Victim detected</button>
-        <button class="btn p-2" @click="actions.deployedRescueKit()" v-if="selectedTile.victim">Rescue Kit deployed</button>
+        <button class="btn p-2" @click="actions.checkpointReached(selectedTile)" v-if="selectedTile.checkpoint && !selectedTile.checkpointVisited">Checkpoint reached</button>
+        <button class="btn p-2" @click="actions.checkpointSkipped(selectedTile)" v-if="selectedTile.checkpoint && !selectedTile.checkpointVisited">Checkpoint skipped</button>
+        <button class="btn p-2" @click="actions.bumperPassed(selectedTile)" v-if="selectedTile.bumper && !selectedTile.bumperPassed">Bumper passed</button>
+        <button class="btn p-2" @click="actions.victimDetected(selectedTile)" v-if="selectedTile.victim && !selectedTile.victimDetected">Victim detected</button>
+        <button class="btn p-2" @click="actions.deployedRescueKit(selectedTile)" v-if="selectedTile.victim && !selectedTile.rescueKitDeployed">Rescue Kit deployed</button>
 <!--        <button class="btn p-2">Ramp Up</button>-->
 <!--        <button class="btn p-2">Ramp Down</button>-->
-        <button class="btn p-2" @click="actions.exitFound()" v-if="selectedTile.startpoint">Exit-Bonus</button>
+        <button class="btn p-2" @click="actions.exitFound(selectedTile)" v-if="selectedTile.startpoint && !selectedTile.exitBonusAchieved">Exit-Bonus</button>
       </div>
     </div>
 
@@ -91,7 +91,13 @@
     <!-- Actions log -->
     <div class="p-2">
       <div v-for="action in actions.actions">
-        {{ action.description }} ({{ new Date(action.timestamp).toLocaleString() }})
+        <div class="inline">
+          {{ action.description }} ({{ new Date(action.timestamp).toLocaleString() }})
+        </div>
+
+        <div class="inline" v-if="action.tile !== null && action.tile !== undefined">
+          [{{ action.tile.x }} {{ action.tile.y }}]
+        </div>
       </div>
     </div>
 

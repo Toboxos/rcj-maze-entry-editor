@@ -41,6 +41,7 @@ export function makeWalls(top, right, bottom, left) {
  */
 export function makeTile(x, y, walls, active) {
     return {
+        // tile properties
         x: x,
         y: y,
         walls: walls,
@@ -50,5 +51,13 @@ export function makeTile(x, y, walls, active) {
         checkpoint: false,
         startPoint: false,
         active: active,
+
+        // run information
+        // used for disabling buttons
+        exitBonusAchieved: false,
+        victimDetected: false,
+        rescueKitDeployed: false,
+        checkpointVisited: false,
+        bumperPassed: false,
     };
 }
