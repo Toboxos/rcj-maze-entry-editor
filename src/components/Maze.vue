@@ -3,15 +3,13 @@
     <div class="space-x-2">
       <button class="btn p-2" @click="play">Play mode</button>
       <button class="btn p-2" @click="edit">Edit mode</button>
-    </div>
 
-    <div class="space-x-2">
       <button class="btn p-2" @click="save">Save</button>
       <button class="btn p-2" @click="load">Load</button>
     </div>
 
     <!-- Tile settings -->
-    <div class="p-2" v-if="selectedTile !== null">
+    <div class="p-2" v-if="selectedTile !== null && editMode">
       <div class="text-2xl">Tile {{ selectedTile.y }} {{ selectedTile.x }}</div>
       <div>
         <div class="inline p-2">
@@ -36,8 +34,43 @@
       </div>
     </div>
 
+    <!-- Playmode stats -->
+    <div class="p-2" v-if="!editMode">
+      <div>Stats:</div>
+      <div class="p-2 border-2 border-black">
+        <div>Time: {{ scoring.timeFormatted }}</div>
+        <div>Checkpoints (Bonus): {{ scoring.numCheckpoints }} ({{ scoring.numCheckpointsWithBonus }})</div>
+        <div>Bumpers passed: {{ scoring.numBumpersPassed }}</div>
+        <div>Victims detected / Rescue kits deployed: {{ scoring.numVictimsDetected }} / {{ scoring.numRescueKitsDeployed }}</div>
+        <div>Lack of progress: {{ scoring.numLackOfProgress }}</div>
+      </div>
+
+      <div>Points:</div>
+      <div class="p-2 border-2 border-black">
+        <div>Reliability Bonus: {{ scoring.reliabilityBonus }}</div>
+        <div>Exit Bonus: {{ scoring.exitBonusPoints }}</div>
+        <div>Total: {{ scoring.points }}</div>
+      </div>
+    </div>
+
+    <!-- Playmode actions -->
+    <div class="p-2" v-if="!editMode">
+      <div>Actions:</div>
+      <div class="p-2 border-2 border-black space-x-2">
+        <button class="btn p-2">Lack of Progress</button>
+        <button class="btn p-2">Checkpoint reached</button>
+        <button class="btn p-2">Checkpoint skipped</button>
+        <button class="btn p-2">Bumper passed</button>
+        <button class="btn p-2">Victim detected</button>
+        <button class="btn p-2">Rescue Kit deployed</button>
+        <button class="btn p-2">Ramp Up</button>
+        <button class="btn p-2">Ramp Down</button>
+        <button class="btn p-2">Exit-Bonus</button>
+      </div>
+    </div>
+
     <!-- Maze -->
-    <div class="p-2">
+    <div class="p-2 mt-2">
       <div v-for="row in maze.data" class="m-0">
         <Tile
             :tile="tile" v-for="tile in row" :key="'tile' + tile.x + '' + tile.y"
@@ -55,8 +88,10 @@
 import Tile from "./Tile.vue";
 import {useMaze} from "./maze.js";
 import {ref, watch} from "vue";
+import {useScoring} from "./scoring.js";
 
 const maze = useMaze();
+const scoring = useScoring();
 
 const selectedTile = ref(null);
 const victim = ref(false);
