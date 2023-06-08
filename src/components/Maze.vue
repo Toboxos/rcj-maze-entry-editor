@@ -33,6 +33,7 @@
         <Tile
             :tile="tile" v-for="tile in row" :key="'tile' + tile.x + '' + tile.y"
             :editMode="editMode"
+            :selected="tile === selectedTile"
             @tileClicked="tileClicked" />
       </div>
     </div>

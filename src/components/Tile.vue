@@ -46,6 +46,7 @@
       <font-awesome-icon
           class="absolute text-2xl text-slate-400 bottom-0 top-0 left-0 right-0 m-auto hover:text-black"
           icon="fa-solid fa-gear"
+          :class="{'text-blue-500': props.selected}"
           @click="$emit('tileClicked', props.tile.x, props.tile.y)" />
     </div>
   </div>
@@ -61,7 +62,7 @@ import {computed} from "vue";
 
 const maze = useMaze();
 
-const props = defineProps(["tile", "editMode"]);
+const props = defineProps(["tile", "editMode", "selected"]);
 const attributes = computed(() => {
   return {
     "wall-top": props.tile.walls[0],
