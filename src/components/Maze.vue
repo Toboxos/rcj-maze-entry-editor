@@ -5,6 +5,11 @@
       EditMode: <input type="checkbox" v-model="editMode">
     </div>
 
+    <div class="space-x-2">
+      <button class="btn p-2" @click="save">Save</button>
+      <button class="btn p-2" @click="load">Load</button>
+    </div>
+
     <!-- Tile settings -->
     <div class="p-2" v-if="selectedTile !== null">
       <div class="text-2xl">Tile {{ selectedTile.y }} {{ selectedTile.x }}</div>
@@ -94,6 +99,47 @@ function tileClicked(x, y) {
   black.value = selectedTile.value.black;
   bumper.value = selectedTile.value.bumper;
   checkpoint.value = selectedTile.value.checkpoint;
+}
+
+function save() {
+  const data = JSON.stringify(maze.data);
+
+  // Create element with <a> tag
+  const link = document.createElement("a");
+
+  // Create a blog object with the file content which you want to add to the file
+  const file = new Blob([data], { type: 'text/plain' });
+
+  // Add file content in the object URL
+  link.href = URL.createObjectURL(file);
+
+  // Add file name
+  link.download = "maze.json";
+
+  // Add click event to <a> tag to save file.
+  link.click();
+  URL.revokeObjectURL(link.href);
+}
+
+function load() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.click();
+
+  input.onchange = e => {
+    // getting a hold of the file reference
+    const file = e.target.files[0];
+
+    // setting up the reader
+    const reader = new FileReader();
+    reader.readAsText(file,'UTF-8');
+
+    // here we tell the reader what to do when it's done reading...
+    reader.onload = readerEvent => {
+      const content = readerEvent.target.result; // this is the content!
+      maze.data = JSON.parse(content);
+    }
+  }
 }
 
 tileClicked(0, 0);
