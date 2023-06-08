@@ -58,6 +58,8 @@ export function makeTile(x, y, walls, active) {
         victimDetected: false,
         rescueKitDeployed: false,
         checkpointVisited: false,
+        checkpointSkipped: false,
+        checkpointWithBonus: false,
         bumperPassed: false,
     };
 }

@@ -6,6 +6,23 @@
       @click="clicked"
   >
 
+    <!-- Checkmarks -->
+    <div v-for="check in checks">
+      <div v-if="check" class="min-h-[10px]">
+        <font-awesome-icon
+            class="absolute text-xl text-green-400"
+            icon="fa-solid fa-check"/>
+      </div>
+    </div>
+
+    <!-- X-Mark checkpoint skipped -->
+    <div v-if="props.tile.checkpointSkipped" class="min-h-[10px]">
+      <font-awesome-icon
+          class="absolute text-xl text-red-400"
+          icon="fa-solid fa-xmark"
+          />
+    </div>
+
     <!-- Victim -->
     <font-awesome-icon
         class="absolute text-5xl text-red-400 right-0 left-0 bottom-0 top-0 m-auto"
@@ -83,7 +100,16 @@ const attributes = computed(() => {
     "bg-white": !props.tile.black && !props.tile.checkpoint
   }
 })
-
+const checks = computed(() => {
+  return [
+      props.tile.exitBonusAchieved,
+      props.tile.victimDetected,
+      props.tile.rescueKitDeployed,
+      props.tile.checkpointVisited && !props.tile.checkpointSkipped,
+      props.tile.bumperPassed,
+      props.tile.checkpointWithBonus,
+  ];
+});
 
 function addUp() {
   let x = props.tile.x;

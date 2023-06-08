@@ -36,12 +36,13 @@ function actionStart() {
 }
 
 function actionCheckpointReached(tile) {
-    scoring.numCheckpoints.value++;
     tile.checkpointVisited = true;
+    scoring.numCheckpoints.value++;
     console.log(tile);
 
     if( legWithoutLackOfProgress ) {
         scoring.numCheckpointsWithBonus.value++;
+        tile.checkpointWithBonus = true;
     }
     legWithoutLackOfProgress = true;
 }
@@ -49,6 +50,7 @@ function actionCheckpointReached(tile) {
 function actionCheckpointSkipped(tile) {
     legWithoutLackOfProgress = true;
     tile.checkpointVisited = true;
+    tile.checkpointSkipped = true;
 }
 
 function actionLackOfProgress() {
