@@ -1,6 +1,10 @@
 <template>
   <div>
-    <div class="space-x-2">
+    <div class="p-2 text-right bg-green-200">
+      Made by <a href="https://toboxos.de" class="text-blue-600 hover:text-blue-800">@Toboxos</a>
+    </div>
+
+    <div class="p-2 space-x-2">
       <button class="btn p-2" @click="play">Play mode</button>
       <button class="btn p-2" @click="edit">Edit mode</button>
 
