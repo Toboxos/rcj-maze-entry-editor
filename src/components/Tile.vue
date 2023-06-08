@@ -196,7 +196,9 @@ function clicked() {
 <style scoped>
 .tile {
   width: 80px;
+  min-width: 80px;
   height: 80px;
+  min-height: 80px;
   display: inline-block;
 
   border: 4px solid transparent;
