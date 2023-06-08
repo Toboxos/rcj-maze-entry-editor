@@ -1,8 +1,8 @@
 <template>
   <div>
-
-    <div class="text-3xl">
-      EditMode: <input type="checkbox" v-model="editMode">
+    <div class="space-x-2">
+      <button class="btn p-2" @click="play">Play mode</button>
+      <button class="btn p-2" @click="edit">Edit mode</button>
     </div>
 
     <div class="space-x-2">
@@ -140,6 +140,14 @@ function load() {
       maze.data = JSON.parse(content);
     }
   }
+}
+
+function edit() {
+  editMode.value = true;
+}
+
+function play() {
+  editMode.value = false;
 }
 
 tileClicked(0, 0);
