@@ -17,6 +17,12 @@
         icon="fa-solid fa-minus"
         v-if="props.tile.bumper" />
 
+    <!-- Startpoint -->
+    <font-awesome-icon
+        class="absolute text-2xl text-green-400 right-0 left-0 top-0 m-auto"
+        icon="fa-solid fa-flag-checkered"
+        v-if="props.tile.startpoint" />
+
     <div class="inline" v-if="props.editMode === true">
 
       <!-- Edit iccons -->

@@ -29,6 +29,10 @@
         <div class="inline p-2">
           <input type="checkbox" v-model="checkpoint"> Checkpoint
         </div>
+
+        <div class="inline p-2">
+          <input type="checkbox" v-model="startpoint"> Startpoint
+        </div>
       </div>
     </div>
 
@@ -59,6 +63,7 @@ const victim = ref(false);
 const black = ref(false);
 const bumper = ref(false);
 const checkpoint = ref(false);
+const startpoint = ref(false);
 const editMode = ref(false);
 
 watch(victim, (newVal, oldVal) => {
@@ -68,7 +73,6 @@ watch(victim, (newVal, oldVal) => {
 
   selectedTile.value.victim = newVal;
 });
-
 watch(black, (newVal, oldVal) => {
   if (selectedTile.value === null) {
     return;
@@ -76,7 +80,6 @@ watch(black, (newVal, oldVal) => {
 
   selectedTile.value.black = newVal;
 });
-
 watch(bumper, (newVal, oldVal) => {
   if (selectedTile.value === null) {
     return;
@@ -84,13 +87,19 @@ watch(bumper, (newVal, oldVal) => {
 
   selectedTile.value.bumper = newVal;
 });
-
 watch(checkpoint, (newVal, oldVal) => {
   if (selectedTile.value === null) {
     return;
   }
 
   selectedTile.value.checkpoint = newVal;
+});
+watch(startpoint, (newVal, oldVal) => {
+  if (selectedTile.value === null) {
+    return;
+  }
+
+  selectedTile.value.startpoint = newVal;
 });
 
 function tileClicked(x, y) {
@@ -99,6 +108,7 @@ function tileClicked(x, y) {
   black.value = selectedTile.value.black;
   bumper.value = selectedTile.value.bumper;
   checkpoint.value = selectedTile.value.checkpoint;
+  startpoint.value = selectedTile.value.startpoint;
 }
 
 function save() {
