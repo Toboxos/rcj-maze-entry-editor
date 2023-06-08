@@ -75,12 +75,19 @@
 
     <!-- Maze -->
     <div class="p-2 mt-2">
-      <div v-for="row in maze.data" class="m-0">
+      <div v-for="row in maze.data" class="m-0 flex flex-nowrap">
         <Tile
             :tile="tile" v-for="tile in row" :key="'tile' + tile.x + '' + tile.y"
             :editMode="editMode"
             :selected="tile === selectedTile"
             @tileClicked="tileClicked" />
+      </div>
+    </div>
+
+    <!-- Actions log -->
+    <div class="p-2">
+      <div v-for="action in actions.actions">
+        {{ action.description }} ({{ new Date(action.timestamp).toLocaleString() }})
       </div>
     </div>
 
