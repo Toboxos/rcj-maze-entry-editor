@@ -3,6 +3,7 @@
       class="tile mt-[-10px] tile relative"
       :class="attributes"
       v-if="props.tile.active"
+      @click="clicked"
   >
 
     <!-- Victim -->
@@ -69,6 +70,7 @@ import {computed} from "vue";
 
 const maze = useMaze();
 
+const emit = defineEmits(['tileClicked']);
 const props = defineProps(["tile", "editMode", "selected"]);
 const attributes = computed(() => {
   return {
@@ -184,6 +186,10 @@ function updateIds() {
       row[x].x = x;
     }
   }
+}
+
+function clicked() {
+  emit('tileClicked', props.tile.x, props.tile.y);
 }
 </script>
 

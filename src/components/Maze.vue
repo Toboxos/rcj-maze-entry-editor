@@ -62,14 +62,14 @@
         <button class="btn p-2" @click="actions.lackOfProgress()">Lack of Progress</button>
       </div>
       <div class="p-2 border-2 border-black space-x-2">
-        <button class="btn p-2" @click="actions.checkpointReached()">Checkpoint reached</button>
-        <button class="btn p-2" @click="actions.checkpointSkipped()">Checkpoint skipped</button>
-        <button class="btn p-2" @click="actions.bumperPassed()">Bumper passed</button>
-        <button class="btn p-2" @click="actions.victimDetected()">Victim detected</button>
-        <button class="btn p-2" @click="actions.deployedRescueKit()">Rescue Kit deployed</button>
+        <button class="btn p-2" @click="actions.checkpointReached()" v-if="selectedTile.checkpoint">Checkpoint reached</button>
+        <button class="btn p-2" @click="actions.checkpointSkipped()" v-if="selectedTile.checkpoint">Checkpoint skipped</button>
+        <button class="btn p-2" @click="actions.bumperPassed()" v-if="selectedTile.bumper">Bumper passed</button>
+        <button class="btn p-2" @click="actions.victimDetected()" v-if="selectedTile.victim">Victim detected</button>
+        <button class="btn p-2" @click="actions.deployedRescueKit()" v-if="selectedTile.victim">Rescue Kit deployed</button>
 <!--        <button class="btn p-2">Ramp Up</button>-->
 <!--        <button class="btn p-2">Ramp Down</button>-->
-        <button class="btn p-2" @click="actions.exitFound()">Exit-Bonus</button>
+        <button class="btn p-2" @click="actions.exitFound()" v-if="selectedTile.startpoint">Exit-Bonus</button>
       </div>
     </div>
 
