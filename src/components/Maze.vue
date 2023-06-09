@@ -1,7 +1,12 @@
 <template>
   <div>
-    <div class="p-2 text-right bg-green-200">
-      Made by <a href="https://toboxos.de" class="text-blue-600 hover:text-blue-800">@Toboxos</a>
+    <div class="p-2 bg-green-200 w-full">
+      <div class="inline text-left">
+        Available on <a href="https://github.com/Toboxos/rcj-maze-entry-editor" class="text-blue-600 hover:text-blue-800">Github</a>
+      </div>
+      <div class="inline float-right">
+        Made by <a href="https://toboxos.de" class="text-blue-600 hover:text-blue-800">@Toboxos</a>
+      </div>
     </div>
 
     <div class="p-2 space-x-2">
