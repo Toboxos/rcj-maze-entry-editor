@@ -9,6 +9,8 @@ const numBumpersPassed = ref(0);
 const numVictimsDetected = ref(0);
 const numRescueKitsDeployed = ref(0);
 const exitBonusAchieved = ref(false);
+const numRampUp = ref(0);
+const numRampDown = ref(0);
 
 // computed stats
 const reliabilityBonus = computed( () => {
@@ -37,10 +39,10 @@ const points = computed( () => {
     _points += numRescueKitsDeployed.value * 10;
 
     // ramp up
-    // _points += rampUp.value ? 20 : 0;
+    _points += numRampUp.value *  20;
 
     // ramp down
-    // _points += rampDown.value ? 10 : 0;
+    _points += numRampDown.value * 10;
 
     // reliability bonus
     _points += reliabilityBonus.value;
@@ -68,6 +70,8 @@ export function useScoring() {
         numVictimsDetected,
         numRescueKitsDeployed,
         exitBonusAchieved,
+        numRampUp,
+        numRampDown,
 
         reliabilityBonus,
         exitBonusPoints,

@@ -41,6 +41,12 @@
         icon="fa-solid fa-flag-checkered"
         v-if="props.tile.startpoint" />
 
+    <!-- Ramp -->
+    <font-awesome-icon
+        class="absolute text-2xl text-blue-600 right-0 left-0 top-0 m-auto"
+        icon="fa-solid fa-arrow-down-up-across-line"
+        v-if="props.tile.isRamp" />
+
     <div class="inline" v-if="props.editMode === true">
 
       <!-- Edit iccons -->
@@ -108,6 +114,8 @@ const checks = computed(() => {
       props.tile.checkpointVisited && !props.tile.checkpointSkipped,
       props.tile.bumperPassed,
       props.tile.checkpointWithBonus,
+      props.tile.rampDown,
+      props.tile.rampUp,
   ];
 });
 

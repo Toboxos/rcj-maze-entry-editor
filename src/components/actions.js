@@ -31,6 +31,8 @@ function actionStart() {
     scoring.numVictimsDetected.value = 0;
     scoring.numRescueKitsDeployed.value = 0;
     scoring.exitBonusAchieved.value = false;
+    scoring.numRampDown.value = 0;
+    scoring.numRampUp.value = 0;
 
     legWithoutLackOfProgress = true;
 }
@@ -76,6 +78,16 @@ function actionRescueKitDeployed(tile) {
 function actionExitBonus(tile) {
     scoring.exitBonusAchieved.value = true;
     tile.exitFound = true;
+}
+
+function actionRampUp(tile) {
+    scoring.numRampUp.value++;
+    tile.rampUp = true;
+}
+
+function actionRampDown(tile) {
+    scoring.numRampDown.value++;
+    tile.rampDown = true;
 }
 
 export function useActions() {
@@ -170,6 +182,22 @@ export function useActions() {
                 tile: tile,
                 description: 'Exit detected (20p)',
                 timestamp: Date.now()
+            });
+        },
+        rampUp(tile) {
+            actions.push({
+                execute: actionRampUp,
+                tile: tile,
+                description: 'Ramp Up (20p)',
+                timestamp: Date.now(),
+            });
+        },
+        rampDown(tile) {
+            actions.push({
+                execute: actionRampDown,
+                tile: tile,
+                description: 'Ramp Down (10p)',
+                timestamp: Date.now(),
             });
         },
 

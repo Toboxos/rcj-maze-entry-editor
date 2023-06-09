@@ -35,6 +35,10 @@
         <div class="inline p-2">
           <input type="checkbox" v-model="startpoint"> Startpoint
         </div>
+
+        <div class="inline p-2">
+          <input type="checkbox" v-model="ramp"> Ramp
+        </div>
       </div>
     </div>
 
@@ -47,6 +51,7 @@
         <div>Bumpers passed: {{ scoring.numBumpersPassed }}</div>
         <div>Victims detected / Rescue kits deployed: {{ scoring.numVictimsDetected }} / {{ scoring.numRescueKitsDeployed }}</div>
         <div>Lack of progress: {{ scoring.numLackOfProgress }}</div>
+        <div>Ramp up / Ramp down: {{ scoring.numRampUp }} / {{ scoring.numRampDown }}</div>
       </div>
 
       <div>Points:</div>
@@ -71,8 +76,8 @@
         <button class="btn p-2" @click="actions.bumperPassed(selectedTile)" v-if="selectedTile.bumper && !selectedTile.bumperPassed">Bumper passed</button>
         <button class="btn p-2" @click="actions.victimDetected(selectedTile)" v-if="selectedTile.victim && !selectedTile.victimDetected">Victim detected</button>
         <button class="btn p-2" @click="actions.deployedRescueKit(selectedTile)" v-if="selectedTile.victim && !selectedTile.rescueKitDeployed">Rescue Kit deployed</button>
-<!--        <button class="btn p-2">Ramp Up</button>-->
-<!--        <button class="btn p-2">Ramp Down</button>-->
+        <button class="btn p-2" @click="actions.rampUp(selectedTile)" v-if="selectedTile.isRamp && !selectedTile.rampUp">Ramp Up</button>
+        <button class="btn p-2" @click="actions.rampDown(selectedTile)" v-if="selectedTile.isRamp && !selectedTile.rampDown">Ramp Down</button>
         <button class="btn p-2" @click="actions.exitFound(selectedTile)" v-if="selectedTile.startpoint && !selectedTile.exitBonusAchieved">Exit-Bonus</button>
       </div>
     </div>
@@ -122,6 +127,7 @@ const black = ref(false);
 const bumper = ref(false);
 const checkpoint = ref(false);
 const startpoint = ref(false);
+const ramp = ref(false);
 const editMode = ref(false);
 
 watch(victim, (newVal, oldVal) => {
@@ -159,6 +165,14 @@ watch(startpoint, (newVal, oldVal) => {
 
   selectedTile.value.startpoint = newVal;
 });
+watch(ramp, (newVal, oldVal) => {
+  if( selectedTile.value === null) {
+    return;
+  }
+
+  selectedTile.value.isRamp = newVal;
+});
+
 
 function tileClicked(x, y) {
   selectedTile.value = maze.data[y][x];
@@ -167,6 +181,7 @@ function tileClicked(x, y) {
   bumper.value = selectedTile.value.bumper;
   checkpoint.value = selectedTile.value.checkpoint;
   startpoint.value = selectedTile.value.startpoint;
+  ramp.value = selectedTile.value.isRamp;
 }
 
 function save() {

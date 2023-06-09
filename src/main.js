@@ -17,11 +17,11 @@ import {
     faGear,
     faPlus,
     faMinus,
-    faFlagCheckered, faCheck, faXmark
+    faFlagCheckered, faCheck, faXmark, faArrowDownUpAcrossLine
 } from '@fortawesome/free-solid-svg-icons'
 
 /* add icons to the library */
-library.add(faCaretLeft, faCaretRight, faCaretDown, faCaretUp, faGear, faPlus, faMinus, faFlagCheckered, faCheck, faXmark);
+library.add(faCaretLeft, faCaretRight, faCaretDown, faCaretUp, faGear, faPlus, faMinus, faFlagCheckered, faCheck, faXmark, faArrowDownUpAcrossLine);
 
 createApp(App)
     .component('font-awesome-icon', FontAwesomeIcon)

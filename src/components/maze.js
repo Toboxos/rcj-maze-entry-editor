@@ -51,6 +51,7 @@ export function makeTile(x, y, walls, active) {
         checkpoint: false,
         startPoint: false,
         active: active,
+        isRamp: false,
 
         // run information
         // used for disabling buttons
@@ -61,5 +62,7 @@ export function makeTile(x, y, walls, active) {
         checkpointSkipped: false,
         checkpointWithBonus: false,
         bumperPassed: false,
+        rampUp: false,
+        rampDown: false,
     };
 }
