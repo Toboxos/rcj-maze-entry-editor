@@ -49,6 +49,11 @@
 
     <!-- Playmode stats -->
     <div class="p-2" v-if="!editMode">
+      <div>TeamName:</div>
+      <div>
+        <input type="text" class="border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
+      </div>
+
       <div>Stats:</div>
       <div class="p-2 border-2 border-black">
         <div>Time: {{ scoring.timeFormatted }}</div>
