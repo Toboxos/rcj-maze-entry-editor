@@ -15,6 +15,8 @@
 
       <button class="btn p-2" @click="save">Save</button>
       <button class="btn p-2" @click="load">Load</button>
+
+      <button class="btn p-2" @click="window.print()">Print page</button>
     </div>
 
     <!-- Tile settings -->

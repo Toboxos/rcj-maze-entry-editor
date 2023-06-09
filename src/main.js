@@ -23,6 +23,8 @@ import {
 /* add icons to the library */
 library.add(faCaretLeft, faCaretRight, faCaretDown, faCaretUp, faGear, faPlus, faMinus, faFlagCheckered, faCheck, faXmark, faArrowDownUpAcrossLine);
 
-createApp(App)
-    .component('font-awesome-icon', FontAwesomeIcon)
+
+const app = createApp(App);
+app.config.globalProperties.window = window;
+app .component('font-awesome-icon', FontAwesomeIcon)
     .mount('#app');
