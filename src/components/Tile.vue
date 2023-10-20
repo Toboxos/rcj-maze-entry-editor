@@ -49,35 +49,35 @@
 
     <div class="inline" v-if="props.editMode === true">
 
-      <!-- Edit iccons -->
+      <!-- Edit icons -->
       <font-awesome-icon
           class="absolute text-2xl text-slate-400 right-0 left-0 m-auto hover:text-black"
           icon="fa-solid fa-caret-up"
           v-if="props.tile.walls[0]"
-          @click="addUp" />
+          @click="$emit('expand', props.tile.x, props.tile.y, 'up')" />
 
       <font-awesome-icon
           class="absolute text-2xl text-slate-400 bottom-0 right-0 left-0 m-auto hover:text-black"
           icon="fa-solid fa-caret-down"
           v-if="props.tile.walls[2]"
-          @click="addDown" />
+          @click="$emit('expand', props.tile.x, props.tile.y, 'down')" />
 
       <font-awesome-icon
           class="absolute text-2xl text-slate-400 bottom-0 top-0 left-0 m-auto hover:text-black"
           icon="fa-solid fa-caret-left"
           v-if="props.tile.walls[3]"
-          @click="addLeft" />
+          @click="$emit('expand', props.tile.x, props.tile.y, 'left')" />
 
       <font-awesome-icon
           class="absolute text-2xl text-slate-400 bottom-0 top-0 right-0 m-auto hover:text-black"
           icon="fa-solid fa-caret-right"
           v-if="props.tile.walls[1]"
-          @click="addRight" />
+          @click="$emit('expand', props.tile.x, props.tile.y, 'right')" />
 
       <font-awesome-icon
-          class="absolute text-2xl text-slate-400 bottom-0 top-0 left-0 right-0 m-auto hover:text-black"
+          class="absolute text-2xl bottom-0 top-0 left-0 right-0 m-auto hover:text-black"
           icon="fa-solid fa-gear"
-          :class="{'text-blue-500': props.selected}"
+          :class="{'text-blue-500': props.selected, 'text-slate-400': !props.selected}"
           @click="$emit('tileClicked', props.tile.x, props.tile.y)" />
     </div>
   </div>
@@ -93,7 +93,7 @@ import {computed} from "vue";
 
 const maze = useMaze();
 
-const emit = defineEmits(['tileClicked']);
+const emit = defineEmits(['tileClicked', 'expand']);
 const props = defineProps(["tile", "editMode", "selected"]);
 const attributes = computed(() => {
   return {
@@ -118,113 +118,6 @@ const checks = computed(() => {
       props.tile.rampUp,
   ];
 });
-
-function addUp() {
-  let x = props.tile.x;
-  let y = props.tile.y;
-
-  // remove up wall
-  maze.data[y][x].walls[0] = false;
-
-
-  // add new row
-  if( y === 0 ) {
-    maze.data.unshift(maze.data[0].map(
-        () => makeTile(-1, -1, makeWalls(true, true, true, true), false)
-    ));
-    y = y + 1; // update idx
-  }
-
-  // remove bottom tile of new tile
-  maze.data[y - 1][x].walls[2] = false;
-  maze.data[y - 1][x].active = true;
-
-  updateIds();
-}
-
-function addLeft() {
-  let x = props.tile.x;
-  let y = props.tile.y;
-
-  // remove left wall
-  maze.data[y][x].walls[3] = false;
-
-
-  // add new column
-  if( x === 0 ) {
-    for( let i = 0; i < maze.data.length; ++i ) {
-      const row = maze.data[i];
-      row.unshift( makeTile(-1, -1, makeWalls(true, true, true, true), false) );
-    }
-    x = x + 1; // update idx
-  }
-
-  // remove right wall of tile
-  maze.data[y][x - 1].walls[1] = false;
-  maze.data[y][x - 1].active = true;
-
-  updateIds();
-}
-
-function addRight() {
-  let x = props.tile.x;
-  let y = props.tile.y;
-
-  // remove right wall
-  maze.data[y][x].walls[1] = false;
-
-
-  // add new column
-  if( x === maze.data[y].length - 1 ) {
-    // add col to every row
-    for( let i = 0; i < maze.data.length; ++i ) {
-      const row = maze.data[i];
-      row.push( makeTile(-1, -1, makeWalls(true, true, true, true), false) );
-    }
-  }
-
-  // remove left wall of tile
-  maze.data[y][x + 1].walls[3] = false;
-  maze.data[y][x + 1].active = true;
-
-  updateIds();
-}
-
-function addDown() {
-  let x = props.tile.x;
-  let y = props.tile.y;
-
-  // remove bottom wall
-  maze.data[y][x].walls[2] = false;
-
-
-  // add new row
-  if( y === maze.data.length - 1 ) {
-    maze.data.push(maze.data[0].map(
-        () => makeTile(-1, -1, makeWalls(true, true, true, true), false)
-    ));
-  }
-
-  // remove top wall of new tile
-  maze.data[y + 1][x].walls[0] = false;
-  maze.data[y + 1][x].active = true;
-
-  updateIds();
-}
-
-function updateIds() {
-  for( let y = 0; y < maze.data.length; ++y ) {
-    const row = maze.data[y];
-    for( let x = 0; x < row.length; ++x ) {
-      row[x].y = y;
-      row[x].x = x;
-    }
-  }
-}
-
-function clicked() {
-  emit('tileClicked', props.tile.x, props.tile.y);
-}
 </script>
 
 <style scoped>

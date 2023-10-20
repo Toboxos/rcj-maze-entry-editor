@@ -1,7 +1,3 @@
 <template>
-  <Maze></Maze>
+  <router-view></router-view>
 </template>
-
-<script setup>
-import Maze from "./components/Maze.vue";
-</script>

@@ -4,6 +4,6 @@
 
 @layer components {
   .btn {
-    @apply p-6 rounded-md text-white bg-blue-500 hover:bg-blue-600;
+    @apply p-4 rounded-md text-white bg-blue-500 hover:bg-blue-600;
   }
 }
