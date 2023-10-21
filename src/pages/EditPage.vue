@@ -2,6 +2,7 @@
   <div class="p-2 flex flex-row space-x-2">
     <button class="btn" @click="save">Save</button>
     <button class="btn" @click="abort">Abort</button>
+    <button class="btn" @click="upload">Load from file</button>
   </div>
 
   <div class="p-2">
@@ -39,6 +40,7 @@ const name = ref(parcour.name);
 const category = ref(parcour.category);
 
 function save() {
+  parcour.name = name;
   parcour.maze = maze.data
   parcour.category = category
   router.push('/');
@@ -46,5 +48,27 @@ function save() {
 
 function abort() {
   router.push('/');
+}
+
+function upload() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.click();
+
+  input.onchange = e => {
+    // getting a hold of the file reference
+    const file = e.target.files[0];
+
+    // setting up the reader
+    const reader = new FileReader();
+    reader.readAsText(file,'UTF-8');
+
+    // here we tell the reader what to do when it's done reading...
+    reader.onload = readerEvent => {
+      const content = readerEvent.target.result; // this is the content!
+      maze.data = reactive(JSON.parse(content));
+      maze.key +=1 ;
+    }
+  }
 }
 </script>
