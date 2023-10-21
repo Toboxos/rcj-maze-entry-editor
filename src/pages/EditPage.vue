@@ -23,25 +23,28 @@
 import {makeTile, makeWalls} from "../components/maze.js";
 import MazeEditor from "../components/MazeEditor.vue";
 import {reactive, ref, watch} from "vue";
+import {useParcours} from "../stores/Parcours.js";
+import {useRouter} from "vue-router";
+
+const router = useRouter();
+const props = defineProps(['parcourId']);
+const parcours = useParcours();
+const parcour = parcours.find(e => e.id == props.parcourId);
 
 // a little trick is needed here:
 // because vue didn't like just assignin a new array to maze we are using
 // a key which we change on upload to force vue to rerender the maze with newest data
-const maze = reactive({'key': 0, 'data': createEmptyMaze()});
-const name = ref('Empty');
-const category = ref('Maze Entry');
-
-function createEmptyMaze() {
-  return [
-    [makeTile(0, 0, makeWalls(true, true, true, true), true)]
-  ]
-}
+const maze = reactive({'key': 0, 'data': JSON.parse(JSON.stringify(parcour.maze))}); // clone here
+const name = ref(parcour.name);
+const category = ref(parcour.category);
 
 function save() {
-
+  parcour.maze = maze.data
+  parcour.category = category
+  router.push('/');
 }
 
 function abort() {
-
+  router.push('/');
 }
 </script>

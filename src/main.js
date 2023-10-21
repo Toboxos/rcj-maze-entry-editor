@@ -2,8 +2,9 @@ import { createApp } from 'vue'
 import { createRouter, createWebHashHistory } from "vue-router";
 import './style.css'
 import App from './App.vue'
-import Maze from "./components/Maze.vue"
+import StartPage from "./pages/StartPage.vue";
 import EditPage from "./pages/EditPage.vue";
+
 
 
 /* import the fontawesome core */
@@ -31,8 +32,8 @@ library.add(faCaretLeft, faCaretRight, faCaretDown, faCaretUp, faGear, faPlus, f
 const router = createRouter({
    history: createWebHashHistory(),
     routes: [
-        { path: '/', component: Maze },
-        { path: '/editor', component: EditPage },
+        { path: '/', component: StartPage },
+        { path: '/editor/:parcourId', component: EditPage, props: true },
     ]
 })
 

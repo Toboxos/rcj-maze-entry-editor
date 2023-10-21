@@ -128,6 +128,7 @@ import {useMaze} from "./maze.js";
 import {ref, watch} from "vue";
 import {useScoring} from "./scoring.js";
 import {useActions} from "./actions.js";
+import MazeField from "./MazeField.vue";
 
 const maze = useMaze();
 const scoring = useScoring();
