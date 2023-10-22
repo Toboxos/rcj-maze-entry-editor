@@ -4,7 +4,7 @@ import './style.css'
 import App from './App.vue'
 import StartPage from "./pages/StartPage.vue";
 import EditPage from "./pages/EditPage.vue";
-
+import CompetitionPage from "./pages/CompetitionPage.vue";
 
 
 /* import the fontawesome core */
@@ -34,6 +34,7 @@ const router = createRouter({
     routes: [
         { path: '/', component: StartPage },
         { path: '/editor/:parcourId', component: EditPage, props: true },
+        { path: '/competition/:id', component: CompetitionPage, props: true },
     ]
 })
 

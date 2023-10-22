@@ -4,6 +4,13 @@
     <!-- Competitions -->
     <div>Competitions:</div>
     <div class="p-2 border-2 border-black flex flex-col">
+      <div v-for="competition in competitions" class="flex flex-row justify-between" :key="competition.id">
+        <div>{{ competition.name }}</div>
+        <div class="flex flex-row space-x-2 text-blue-600">
+          <button @click="editCompetition(competition)">Edit</button>
+          <button @click="deleteCompetition(competition)">Delete</button>
+        </div>
+      </div>
       <button class="w-20" @click="createCompetition">+ Create</button>
     </div>
 
@@ -28,14 +35,18 @@
 <script setup>
 import {reactive} from "vue";
 import {useParcours, addParcour} from "../stores/Parcours.js";
+import {useCompetitions, addCompetition} from "../stores/competitions.js";
 import {useRouter} from "vue-router";
 
 const router = useRouter();
 const parcours = useParcours();
+const competitions = useCompetitions();
 
 function createCompetition() {
   const name = prompt("Name of the Competition");
-  alert(name);
+  if( name !== null ) {
+    addCompetition(name);
+  }
 }
 
 function createParcour() {
@@ -46,9 +57,7 @@ function createParcour() {
 }
 
 function deleteParcour(parcour) {
-  console.log("test");
   const index = parcours.indexOf(parcour);
-  console.log(index);
   parcours.splice(index, 1);
 }
 
@@ -74,5 +83,14 @@ function downloadParcour(parcour) {
   // Add click event to <a> tag to save file.
   link.click();
   URL.revokeObjectURL(link.href);
+}
+
+function editCompetition(competition) {
+  router.push('/competition/' + competition.id);
+}
+
+function deleteCompetition(competition) {
+  const index = competitions.indexOf(competition)
+  competitions.splice(index, 1)
 }
 </script>
