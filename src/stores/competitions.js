@@ -19,5 +19,6 @@ export function addCompetition(name) {
     competitions.push({
         'id': competitions.length,
         'name': name,
+        'teams': [],
     });
 }
