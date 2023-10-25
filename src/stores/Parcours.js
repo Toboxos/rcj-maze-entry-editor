@@ -29,3 +29,7 @@ export function addParcour(name) {
         'maze': createEmptyMaze(),
     });
 }
+
+export function getParcourById(id) {
+    return parcours.find(e => e.id === id)
+}

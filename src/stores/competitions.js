@@ -20,5 +20,34 @@ export function addCompetition(name) {
         'id': competitions.length,
         'name': name,
         'teams': [],
+        'schedules': [],
     });
+}
+
+export function addSchedule(competitionId, team, parcourId, time) {
+    console.log("time =", time)
+    const competition = competitions.find((e) => e.id === competitionId )
+    if( competition === null ) {
+        console.error("Competition ${competitionId} not found!")
+        return
+    }
+
+    const schedules = competition.schedules;
+    schedules.push({
+        'id': schedules.length,
+        'team': team,
+        'parcourId': parcourId,
+        'time': time
+    })
+}
+
+export function deleteSchedule(competitionId, scheduleId) {
+    const competition = competitions.find((e) => e.id === competitionId )
+    if( competition === null ) {
+        console.error("Competition ${competitionId} not found!")
+        return
+    }
+
+    const index = competition.schedules.indexOf(scheduleId)
+    competition.schedules.splice(index, 1)
 }
