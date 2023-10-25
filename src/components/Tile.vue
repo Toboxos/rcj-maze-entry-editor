@@ -3,7 +3,7 @@
       class="tile mt-[-10px] tile relative"
       :class="attributes"
       v-if="props.tile.active"
-      @click="clicked"
+      @click="$emit('tileClicked', props.tile.x, props.tile.y)"
   >
 
     <!-- Checkmarks -->

@@ -24,6 +24,17 @@ export function addCompetition(name) {
     });
 }
 
+export function getScheduleById(competitionId, scheduleId) {
+    console.log(competitions)
+    const competition = competitions.find((e) => e.id === competitionId )
+    if( competition === undefined ) {
+        console.error("Competition " + competitionId + " not found!")
+        return null
+    }
+
+    return competition.schedules.find(e => e.id === scheduleId)
+}
+
 export function addSchedule(competitionId, team, parcourId, time) {
     console.log("time =", time)
     const competition = competitions.find((e) => e.id === competitionId )

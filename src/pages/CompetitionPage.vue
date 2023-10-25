@@ -124,7 +124,7 @@ function closeScheduleDialog() {
 }
 
 function viewSchedule(id) {
-
+  router.push(router.currentRoute.value.fullPath + '/schedule/' + id)
 }
 
 </script>
