@@ -3,6 +3,7 @@
   <div class="p-2">
     <div class="flex flex-row space-x-2">
       <button class="btn" @click="back">Back</button>
+      <button class="btn" @click="save">Save</button>
     </div>
 
     <!-- Playmode stats -->
@@ -70,7 +71,7 @@ const props = defineProps(['competitionId', 'scheduleId'])
 const schedule = getScheduleById(parseInt(props.competitionId), parseInt(props.scheduleId))
 const parcour = getParcourById(schedule.parcourId)
 const maze = ref(JSON.parse(JSON.stringify(parcour.maze)))
-const scoring = newScoring();
+const scoring = newScoring(schedule.actions.map(a => {return {'name': a.name, 'tile': maze.value[a.y][a.x]}}));
 
 const selectedTile = ref(null);
 const victim = ref(false);
@@ -142,5 +143,14 @@ function reset() {
 
 function back() {
   router.back()
+}
+
+function save() {
+  console.log(scoring.actions)
+  schedule.actions = scoring.actions.map(a => {
+    const x = a.tile ? a.tile.x : 0
+    const y = a.tile ? a.tile.y : 0
+    return {'name': a.name, 'x': x, 'y': y}
+  })
 }
 </script>

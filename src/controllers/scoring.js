@@ -1,6 +1,6 @@
 import {reactive, computed, watch} from "vue";
 
-export function newScoring() {
+export function newScoring(existingActions) {
     const values = newValues()
     const scores = {
         reliabilityBonus: computed( () => {
@@ -56,7 +56,7 @@ export function newScoring() {
         })
     })
 
-    return {
+    const obj = {
         values: values,
         scores: scores,
         timeFormatted: timeFormatted,
@@ -77,6 +77,7 @@ export function newScoring() {
 
             // push back start action
             actions.push({
+                name: 'start',
                 execute: actionStart(values),
                 tile: null,
                 description: 'Run started',
@@ -93,6 +94,7 @@ export function newScoring() {
             }
 
             actions.push({
+                name: 'stop',
                 execute: () => {},
                 tile: null,
                 description: 'Run stopped',
@@ -101,6 +103,7 @@ export function newScoring() {
         },
         checkpointReached(tile) {
             actions.push({
+                name: 'checkpointReached',
                 execute: actionCheckpointReached(values),
                 tile: tile,
                 description: 'Checkpoint reached (10p)' + (values.numLackOfProgress ? ' + First try (10p)' : ''),
@@ -109,6 +112,7 @@ export function newScoring() {
         },
         checkpointSkipped(tile) {
             actions.push({
+                name: 'checkpointSkipped',
                 execute: actionCheckpointSkipped(values),
                 tile: tile,
                 description: 'Checkpoint skipped',
@@ -117,6 +121,7 @@ export function newScoring() {
         },
         lackOfProgress() {
             actions.push({
+                name: 'lackOfProgress',
                 execute: actionLackOfProgress(values),
                 tile: null,
                 description: 'Lack of Progress',
@@ -126,6 +131,7 @@ export function newScoring() {
         bumperPassed(tile) {
             // push back bumper action
             actions.push({
+                name: 'bumperPassed',
                 execute: actionBumperPassed(values),
                 tile: tile,
                 description: 'Bumper passed (5p)',
@@ -134,6 +140,7 @@ export function newScoring() {
         },
         victimDetected(tile) {
             actions.push({
+                name: 'victimDetected',
                 execute: actionVictimDetected(values),
                 tile: tile,
                 description: 'Victim detected (10p)',
@@ -142,6 +149,7 @@ export function newScoring() {
         },
         deployedRescueKit(tile) {
             actions.push({
+                name: 'deployedRescueKit',
                 execute: actionRescueKitDeployed(values),
                 tile: tile,
                 description: 'Rescue Kit deployed (10p)',
@@ -150,6 +158,7 @@ export function newScoring() {
         },
         exitFound(tile) {
             actions.push({
+                name: 'exitFound',
                 execute: actionExitBonus(values),
                 tile: tile,
                 description: 'Exit detected (20p)',
@@ -158,6 +167,7 @@ export function newScoring() {
         },
         rampUp(tile) {
             actions.push({
+                name: 'rampUp',
                 execute: actionRampUp(values),
                 tile: tile,
                 description: 'Ramp Up (20p)',
@@ -166,6 +176,7 @@ export function newScoring() {
         },
         rampDown(tile) {
             actions.push({
+                name: 'rampDown',
                 execute: actionRampDown(values),
                 tile: tile,
                 description: 'Ramp Down (10p)',
@@ -178,6 +189,24 @@ export function newScoring() {
             actions.pop();
         }
     }
+
+    existingActions.forEach(a => {
+        switch (a.name) {
+            case 'start': obj.start(); break;
+            case 'stop': obj.stop(); break;
+            case 'checkpointReached': obj.checkpointReached(a.tile); break;
+            case 'checkpointSkipped': obj.checkpointSkipped(a.tile); break;
+            case 'lackOfProgress': obj.lackOfProgress(); break;
+            case 'bumperPassed': obj.bumperPassed(a.tile); break;
+            case 'victimDetected': obj.victimDetected(a.tile); break;
+            case 'deployedRescueKit': obj.deployedRescueKit(a.tile); break;
+            case 'exitFound': obj.exitFound(a.tile); break;
+            case 'rampUp': obj.rampUp(a.tile); break;
+            case 'rampDown': obj.rampDown(a.tile); break;
+        }
+    })
+
+    return obj
 }
 
 function newValues() {

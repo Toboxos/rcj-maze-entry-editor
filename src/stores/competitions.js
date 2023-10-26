@@ -48,7 +48,8 @@ export function addSchedule(competitionId, team, parcourId, time) {
         'id': schedules.length,
         'team': team,
         'parcourId': parcourId,
-        'time': time
+        'time': time,
+        'actions': []
     })
 }
 
