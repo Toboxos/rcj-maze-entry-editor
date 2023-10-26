@@ -62,6 +62,10 @@ export function newScoring() {
         timeFormatted: timeFormatted,
         actions: actions,
 
+        reset() {
+            Object.assign(values, newValues())
+            actions.splice(0, actions.length)
+        },
         start() {
             values.time = 0;
             startTime = Date.now();

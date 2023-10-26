@@ -34,6 +34,7 @@
         <button class="btn p-2" @click="scoring.start()">Start</button>
         <button class="btn p-2" @click="scoring.stop()">Stop</button>
         <button class="btn p-2" @click="scoring.lackOfProgress()">Lack of Progress</button>
+        <button class="btn p-2" @click="reset()">Reset</button>
       </div>
       <div class="p-2 border-2 border-black space-x-2" v-if="selectedTile">
         <button class="btn p-2" @click="scoring.checkpointReached(selectedTile)" v-if="selectedTile.checkpoint && !selectedTile.checkpointVisited">Checkpoint reached</button>
@@ -132,6 +133,11 @@ function tileClicked(x, y) {
   checkpoint.value = selectedTile.value.checkpoint;
   startpoint.value = selectedTile.value.startpoint;
   ramp.value = selectedTile.value.isRamp;
+}
+
+function reset() {
+  maze.value = JSON.parse(JSON.stringify(parcour.maze));
+  scoring.reset()
 }
 
 function back() {
