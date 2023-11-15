@@ -34,7 +34,7 @@
 
 <script setup>
 import {reactive} from "vue";
-import {useParcours, addParcour} from "../stores/Parcours.js";
+import {useParcours, addParcour, deleteParcour} from "../stores/Parcours.js";
 import {useCompetitions, addCompetition} from "../stores/competitions.js";
 import {useRouter} from "vue-router";
 
@@ -54,11 +54,6 @@ function createParcour() {
   if( name !== null ) {
     addParcour(name);
   }
-}
-
-function deleteParcour(parcour) {
-  const index = parcours.indexOf(parcour);
-  parcours.splice(index, 1);
 }
 
 function editParcour(parcour) {

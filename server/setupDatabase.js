@@ -7,18 +7,6 @@ db.exec(`
         id INTEGER PRIMARY KEY,
         name TEXT,
         category TEXT,
-        maze_id INTEGER
-    )
-`)
-
-db.exec(`
-    CREATE TABLE maze (
-        maze_id INTEGER,
-        x INTEGER,
-        y INTEGER,
-        wall_top BOOLEAN,
-        wall_right BOOLEAN,
-        wall_bottom BOOLEAN,
-        wall_left BOOLEAN
+        maze TEXT
     )
 `)

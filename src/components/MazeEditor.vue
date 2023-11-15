@@ -45,7 +45,7 @@ import MazeField from "./MazeField.vue";
 const props = defineProps(['maze']);
 
 const maze = props.maze;
-let selectedTile = ref(maze[0][0]);
+let selectedTile = ref(null);
 
 const victim = ref(false);
 const black = ref(false);
