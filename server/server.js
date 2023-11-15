@@ -112,8 +112,8 @@ app.post("/competition/:id/schedule", (req, res) => {
     const parcour = data.parcour
     const time = data.time
 
-    db.run("INSERT INTO schedules (competition, team, parcour, time, actions) VALUES (?, ?, ?, ?, ?)",
-        [id, team, parcour, time, "[]"],
+    db.run("INSERT INTO schedules (competition, team, parcour, time, actions, score) VALUES (?, ?, ?, ?, ?, ?)",
+        [id, team, parcour, time, "[]", 0],
         function (err, result) {
             res.send({})
     })
@@ -123,9 +123,10 @@ app.put("/competition/:comp/schedule/:id/scoring", (req, res) => {
     const id = req.params.id
     const data = req.body
     const actions = data.actions
+    const score = data.score
 
-    db.run("UPDATE schedules SET actions = ? WHERE id = ?",
-        [JSON.stringify(actions), id],
+    db.run("UPDATE schedules SET actions = ?, score = ? WHERE id = ?",
+        [JSON.stringify(actions), score, id],
         function (err, result) {
             res.send({})
         })

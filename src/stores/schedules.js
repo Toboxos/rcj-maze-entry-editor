@@ -29,7 +29,13 @@ export async function deleteSchedule(schedule) {
     schedules.splice(index, 1)
 }
 
-export async function saveScoring(schedule, actions) {
+export async function saveScoring(schedule, scoring) {
+    const actions = scoring.actions.map(a => {
+        const x = a.tile ? a.tile.x : 0
+        const y = a.tile ? a.tile.y : 0
+        return {'name': a.name, 'x': x, 'y': y}
+    })
+
     await API.axios.put('http://localhost:5001/competition/' + schedule.competition + "/schedule/" + schedule.id + "/scoring",
-        {'actions': actions})
+        { 'actions': actions, 'score': scoring.scores.points.value })
 }

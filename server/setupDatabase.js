@@ -27,6 +27,7 @@ db.exec(`
         team INTEGER,
         parcour INTEGER,
         time TEXT,
-        actions TEXT
+        actions TEXT,
+        score INTEGER
     );
 `)

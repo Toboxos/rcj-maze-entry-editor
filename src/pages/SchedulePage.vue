@@ -187,10 +187,6 @@ function back() {
 }
 
 function save() {
-  saveScoring(schedule.value, scoring.actions.map(a => {
-    const x = a.tile ? a.tile.x : 0
-    const y = a.tile ? a.tile.y : 0
-    return {'name': a.name, 'x': x, 'y': y}
-  }))
+  saveScoring(schedule.value, scoring)
 }
 </script>
