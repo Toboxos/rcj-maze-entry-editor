@@ -5,7 +5,11 @@ const schedules = reactive([]);
 
 async function fetchSchedules(competition) {
     const result = await API.axios.get('http://localhost:5001/competition/' + competition.id + "/schedules")
-    return result.data
+    const data = result.data.map(e => {
+        e.actions = JSON.parse(e.actions)
+        return e
+    })
+    return data
 }
 
 export function useSchedules(competition) {
