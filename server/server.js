@@ -75,7 +75,7 @@ app.delete("/competition/:id", (req, res) => {
 
 app.get("/competition/:id/teams", (req, res) => {
     const id = req.params.id
-    db.all(`SELECT * FROM teams WHERE competition = ?`, (err, rows) => {
+    db.all(`SELECT * FROM teams WHERE competition = ?`, id, (err, rows) => {
         res.send(rows)
     })
 })

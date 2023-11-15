@@ -10,10 +10,10 @@
 
     <div>Teams:</div>
     <div class="p-2 border-2 border-black flex flex-col">
-      <div v-for="name in competition.teams" class="flex flex-row justify-between" :key="name">
-        <div>{{ name }}</div>
+      <div v-for="team in teams" class="flex flex-row justify-between" :key="team.id">
+        <div>{{ team.name }}</div>
         <div class="flex flex-row space-x-2 text-blue-600">
-          <button @click="deleteTeam(name)">Delete</button>
+          <button @click="deleteTeam(team)">Delete</button>
         </div>
       </div>
       <button class="w-20" @click="createTeam">+ Create</button>
@@ -21,7 +21,7 @@
 
     <div>Schedule:</div>
     <div class="p-2 border-2 border-black flex flex-col">
-      <div v-for="schedule in competition.schedules" class="flex flec-row justify-between" :key="schedule.id">
+      <div v-for="schedule in scheduless" class="flex flec-row justify-between" :key="schedule.id">
         <div>{{ schedule.time }}</div>
         <div>{{ schedule.team }}</div>
         <div>{{ getParcourById(schedule.parcourId).name }}</div>
@@ -41,7 +41,7 @@
       <div class="p-2">
         Team:
         <select v-model="newSchedule.team">
-          <option v-for="name in competition.teams" :value="name">{{ name }}</option>
+          <option v-for="name in teams" :value="name">{{ name }}</option>
         </select>
       </div>
       <div class="p-2">
@@ -64,19 +64,26 @@
 </template>
 
 <script setup>
-import {reactive, ref} from 'vue';
+import {reactive, ref, watch} from 'vue';
 import {useCompetitions, addSchedule, deleteSchedule} from "../stores/competitions.js";
 import {useRouter} from "vue-router";
 import {useParcours, getParcourById} from "../stores/Parcours.js";
+import {useTeams, addTeam, deleteTeam} from "../stores/teams.js";
+import {useSchedules} from "../stores/schedules.js";
 
 const router = useRouter();
 const props = defineProps(['id'])
 const parcours = useParcours()
 const competitions = useCompetitions()
-const competition = competitions.find(c => c.id == props.id)
+const teams = useTeams({"id": props.id})
+const schedules = useSchedules({"id": props.id})
 
-console.log(competition.schedules)
+watch(competitions, (newVal) => {
+  competition.value = newVal.find(c => c.id == props.id)
+  name.value = competition.value.name
+})
 
+const competition = ref(null);
 const name = ref(competition.name);
 const newSchedule = reactive({
   'team': '',
@@ -98,13 +105,8 @@ function back() {
 function createTeam() {
   const name = prompt("Team name:")
   if( name !== null ) {
-    competition.teams.push(name)
+    addTeam(competition.value, name)
   }
-}
-
-function deleteTeam(name) {
-  const index = competition.teams.indexOf(name)
-  competition.teams.splice(index, 1)
 }
 
 function createSchedule() {
