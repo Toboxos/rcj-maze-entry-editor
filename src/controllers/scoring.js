@@ -5,11 +5,11 @@ export function newScoring(existingActions) {
     const scores = {
         reliabilityBonus: computed( () => {
             return Math.max(0, 10 * (
-                values.numVicitimsDetected + values.numRescueKitsDeployed - values.numLackOfProgress
+                values.numVictimsDetected + values.numRescueKitsDeployed - values.numLackOfProgress
             ))
         }),
         exitBonus: computed( () => {
-            return values.exitBonusAchieved ? values.numVicitimsDetected * 10 : 0
+            return values.exitBonusAchieved ? values.numVictimsDetected * 10 : 0
         }),
         points: computed( () => {
             let _points = 0;
@@ -22,7 +22,7 @@ export function newScoring(existingActions) {
             _points += values.numBumpersPassed * 5
 
             // victims
-            _points += values.numVicitimsDetected * 10
+            _points += values.numVictimsDetected * 10
             _points += values.numRescueKitsDeployed * 10
 
             // ramp
@@ -216,7 +216,7 @@ function newValues() {
         numCheckpointsBonus: 0,
         numLackOfProgress: 0,
         numBumpersPassed: 0,
-        numVicitimsDetected: 0,
+        numVictimsDetected: 0,
         numRescueKitsDeployed: 0,
         exitBonusAchieved: false,
         numRampUp: 0,
@@ -232,7 +232,7 @@ function actionStart(values) {
         values.numCheckpointsBonus = 0
         values.numLackOfProgress = 0
         values.numBumpersPassed = 0
-        values.numVicitimsDetected = 0
+        values.numVictimsDetected = 0
         values.numRescueKitsDeployed = 0
         values.exitBonusAchieved = false
         values.numRampUp = 0
