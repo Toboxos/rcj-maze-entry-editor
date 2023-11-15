@@ -21,13 +21,13 @@
 
     <div>Schedule:</div>
     <div class="p-2 border-2 border-black flex flex-col">
-      <div v-for="schedule in scheduless" class="flex flec-row justify-between" :key="schedule.id">
+      <div v-for="schedule in schedules" class="flex flec-row justify-between" :key="schedule.id">
         <div>{{ schedule.time }}</div>
-        <div>{{ schedule.team }}</div>
-        <div>{{ getParcourById(schedule.parcourId).name }}</div>
+        <div>{{ teams.find(e => e.id == schedule.team).name }}</div>
+        <div>{{ parcours.find(e => e.id == schedule.parcour).name }}</div>
         <div class="flex flex-row space-x-2 text-blue-600">
           <button @click="viewSchedule(schedule.id)">View</button>
-          <button @click="deleteSchedule(competition.id, schedule.id)">Delete</button>
+          <button @click="deleteSchedule(schedule)">Delete</button>
         </div>
       </div>
       <button class="w-20" @click="openScheduleDialog">+ Create</button>
@@ -41,7 +41,7 @@
       <div class="p-2">
         Team:
         <select v-model="newSchedule.team">
-          <option v-for="name in teams" :value="name">{{ name }}</option>
+          <option v-for="team in teams" :value="team">{{ team.name }}</option>
         </select>
       </div>
       <div class="p-2">
@@ -65,11 +65,11 @@
 
 <script setup>
 import {reactive, ref, watch} from 'vue';
-import {useCompetitions, addSchedule, deleteSchedule} from "../stores/competitions.js";
+import {useCompetitions} from "../stores/competitions.js";
 import {useRouter} from "vue-router";
 import {useParcours, getParcourById} from "../stores/Parcours.js";
 import {useTeams, addTeam, deleteTeam} from "../stores/teams.js";
-import {useSchedules} from "../stores/schedules.js";
+import {useSchedules, addSchedule, deleteSchedule} from "../stores/schedules.js";
 
 const router = useRouter();
 const props = defineProps(['id'])
@@ -110,7 +110,11 @@ function createTeam() {
 }
 
 function createSchedule() {
-  addSchedule(competition.id, newSchedule.team, newSchedule.parcour.id, newSchedule.datetime)
+  addSchedule(competition.value, {
+    'team': newSchedule.team.id,
+    'parcour': newSchedule.parcour.id,
+    'time': newSchedule.datetime
+  })
   closeScheduleDialog()
 }
 

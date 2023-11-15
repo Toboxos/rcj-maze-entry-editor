@@ -23,7 +23,6 @@ db.exec(`
     
     CREATE TABLE schedules (
         id INTEGER PRIMARY KEY,
-        name TEXT,
         competition INTEGER,
         team INTEGER,
         parcour INTEGER,

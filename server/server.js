@@ -100,7 +100,7 @@ app.delete("/competition/:comp/team/:id", (req, res) => {
 
 app.get("/competition/:id/schedules", (req, res) => {
     const id = req.params.id
-    db.all(`SELECT * FROM schedules WHERE competition = ?`, (err, rows) => {
+    db.all(`SELECT * FROM schedules WHERE competition = ?`, id, (err, rows) => {
         res.send(rows)
     })
 })
@@ -108,15 +108,23 @@ app.get("/competition/:id/schedules", (req, res) => {
 app.post("/competition/:id/schedule", (req, res) => {
     const id = req.params.id
     const data = req.body
-    const name = data.name
     const team = data.team
     const parcour = data.parcour
     const time = data.time
 
-    db.run("INSERT INTO schedules (name, competition, team, parcour, time, actions) VALUES (?, ?, ?, ?, ?)",
-        [name, id, team, parcour, time, "[]"],
+    db.run("INSERT INTO schedules (competition, team, parcour, time, actions) VALUES (?, ?, ?, ?, ?)",
+        [id, team, parcour, time, "[]"],
         function (err, result) {
             res.send({})
+    })
+})
+
+app.delete("/competition/:comp/schedule/:id", (req, res) => {
+    const id = req.params.id
+
+    db.run("DELETE FROM schedules WHERE id = ?", id, function (err, result) {
+        console.log(err)
+        res.send({})
     })
 })
 
