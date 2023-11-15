@@ -119,6 +119,18 @@ app.post("/competition/:id/schedule", (req, res) => {
     })
 })
 
+app.put("/competition/:comp/schedule/:id/scoring", (req, res) => {
+    const id = req.params.id
+    const data = req.body
+    const actions = data.actions
+
+    db.run("UPDATE schedules SET actions = ? WHERE id = ?",
+        [JSON.stringify(actions), id],
+        function (err, result) {
+            res.send({})
+        })
+})
+
 app.delete("/competition/:comp/schedule/:id", (req, res) => {
     const id = req.params.id
 

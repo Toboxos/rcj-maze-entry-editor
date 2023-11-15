@@ -28,3 +28,8 @@ export async function deleteSchedule(schedule) {
     const index = schedules.indexOf(schedule)
     schedules.splice(index, 1)
 }
+
+export async function saveScoring(schedule, actions) {
+    await API.axios.put('http://localhost:5001/competition/' + schedule.competition + "/schedule/" + schedule.id + "/scoring",
+        {'actions': actions})
+}
