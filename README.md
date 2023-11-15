@@ -1,7 +1,17 @@
-# Vue 3 + Vite
+# RoboCup Junior Maze Entry Editor
+This is a tool which allows to plan and operate one or more RoboCup Junior Maze Entry competitions.
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+# Usage
+## Server
+Execute ```npm run create-database``` first to create an empty database.
+After that start the server by ```npm run server```. 
+The server listens to port 5001 on default. You can change this in ```server/server.js```
 
-## Recommended IDE Setup
+## Client
+First create a .env.local file with following entry:
+````
+VITE_API_URL=http://localhost:5001
+````
+Change the url so it points to the server.
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+Start the webserver by running ```npm run dev```.
