@@ -9,7 +9,7 @@ watch(competitions, (newValue, _) => {
 });
 
 async function fetchCompetitions() {
-    const result = await API.axios.get('http://localhost:5001/competitions')
+    const result = await API.axios.get('/competitions')
     console.log(result.data)
     return result.data
 }
@@ -20,7 +20,7 @@ export function useCompetitions() {
 }
 
 export async function addCompetition(name) {
-    await API.axios.post("http://localhost:5001/competition",{
+    await API.axios.post("competition",{
         "name": name,
     })
 
@@ -28,7 +28,7 @@ export async function addCompetition(name) {
 }
 
 export async function deleteCompetition(competition) {
-    await API.axios.delete("http://localhost:5001/competition/" + competition.id)
+    await API.axios.delete("competition/" + competition.id)
 
     const index = competitions.indexOf(competition);
     competitions.splice(index, 1);

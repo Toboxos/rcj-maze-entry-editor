@@ -4,7 +4,7 @@ import {API} from "../api.js";
 const schedules = reactive([]);
 
 async function fetchSchedules(competition) {
-    const result = await API.axios.get('http://localhost:5001/competition/' + competition.id + "/schedules")
+    const result = await API.axios.get('competition/' + competition.id + "/schedules")
     const data = result.data.map(e => {
         e.actions = JSON.parse(e.actions)
         return e
@@ -18,12 +18,12 @@ export function useSchedules(competition) {
 }
 
 export async function addSchedule(competition, schedule) {
-    await API.axios.post('http://localhost:5001/competition/' + competition.id + "/schedule", schedule)
+    await API.axios.post('competition/' + competition.id + "/schedule", schedule)
     fetchSchedules(competition).then(data => Object.assign(schedules, data))
 }
 
 export async function deleteSchedule(schedule) {
-    await API.axios.delete('http://localhost:5001/competition/' + schedule.competition + "/schedule/" + schedule.id)
+    await API.axios.delete('competition/' + schedule.competition + "/schedule/" + schedule.id)
 
     const index = schedules.indexOf(schedule)
     schedules.splice(index, 1)
@@ -36,6 +36,6 @@ export async function saveScoring(schedule, scoring) {
         return {'name': a.name, 'x': x, 'y': y}
     })
 
-    await API.axios.put('http://localhost:5001/competition/' + schedule.competition + "/schedule/" + schedule.id + "/scoring",
+    await API.axios.put('competition/' + schedule.competition + "/schedule/" + schedule.id + "/scoring",
         { 'actions': actions, 'score': scoring.scores.points.value })
 }

@@ -11,7 +11,7 @@ function createEmptyMaze() {
 }
 
 async function fetchParcours() {
-    const result = await API.axios.get('http://localhost:5001/parcours')
+    const result = await API.axios.get('parcours')
     const data = result.data.map(e => {
         if( e.maze === null ) {
             e.maze = createEmptyMaze()
@@ -35,12 +35,12 @@ export function useParcours() {
 }
 
 export async function addParcour(name) {
-    // await API.axios.post("http://localhost:5001/parcours", JSON.stringify({
+    // await API.axios.post("/parcours", JSON.stringify({
     //     "name": name,
     //     "category": ""
     // }), {"headers": {"Content-Type": "application/json"}})
 
-    await API.axios.post("http://localhost:5001/parcours",{
+    await API.axios.post("parcours",{
         "name": name,
         "category": ""
     })
@@ -49,7 +49,7 @@ export async function addParcour(name) {
 }
 
 export function saveParcour(parcour) {
-    API.axios.put("http://localhost:5001/parcour/" + parcour.id, {
+    API.axios.put("parcour/" + parcour.id, {
         "name": parcour.name,
         "category": parcour.category,
         "maze": JSON.stringify(parcour.maze)
@@ -57,7 +57,7 @@ export function saveParcour(parcour) {
 }
 
 export function deleteParcour(parcour) {
-    API.axios.delete("http://localhost:5001/parcour/" + parcour.id)
+    API.axios.delete("parcour/" + parcour.id)
 
     const index = parcours.indexOf(parcour);
     parcours.splice(index, 1);
