@@ -35,7 +35,7 @@
 <script setup>
 import {reactive} from "vue";
 import {useParcours, addParcour, deleteParcour} from "../stores/Parcours.js";
-import {useCompetitions, addCompetition} from "../stores/competitions.js";
+import {useCompetitions, addCompetition, deleteCompetition} from "../stores/competitions.js";
 import {useRouter} from "vue-router";
 
 const router = useRouter();
@@ -82,10 +82,5 @@ function downloadParcour(parcour) {
 
 function editCompetition(competition) {
   router.push('/competition/' + competition.id);
-}
-
-function deleteCompetition(competition) {
-  const index = competitions.indexOf(competition)
-  competitions.splice(index, 1)
 }
 </script>

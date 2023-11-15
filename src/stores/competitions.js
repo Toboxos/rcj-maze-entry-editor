@@ -1,5 +1,6 @@
 import {reactive, watch} from "vue";
 import {makeTile, makeWalls} from "../components/maze.js";
+import {API} from "../api.js";
 
 const competitions = reactive([]);
 
@@ -7,21 +8,30 @@ watch(competitions, (newValue, _) => {
     window.localStorage.setItem('competitions', JSON.stringify(competitions));
 });
 
+async function fetchCompetitions() {
+    const result = await API.axios.get('http://localhost:5001/competitions')
+    console.log(result.data)
+    return result.data
+}
+
 export function useCompetitions() {
-    const storage = window.localStorage.getItem('competitions');
-    if( storage !== null ) {
-        Object.assign(competitions, JSON.parse(storage));
-    }
+    fetchCompetitions().then(data => Object.assign(competitions, data))
     return competitions;
 }
 
-export function addCompetition(name) {
-    competitions.push({
-        'id': competitions.length,
-        'name': name,
-        'teams': [],
-        'schedules': [],
-    });
+export async function addCompetition(name) {
+    await API.axios.post("http://localhost:5001/competition",{
+        "name": name,
+    })
+
+    await fetchCompetitions().then(data => Object.assign(competitions, data))
+}
+
+export async function deleteCompetition(competition) {
+    await API.axios.delete("http://localhost:5001/competition/" + competition.id)
+
+    const index = competitions.indexOf(competition);
+    competitions.splice(index, 1);
 }
 
 export function getScheduleById(competitionId, scheduleId) {
