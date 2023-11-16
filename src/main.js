@@ -26,6 +26,7 @@ import {
     faMinus,
     faFlagCheckered, faCheck, faXmark, faArrowDownUpAcrossLine
 } from '@fortawesome/free-solid-svg-icons'
+import ScoreboardPage from "./pages/ScoreboardPage.vue";
 
 /* add icons to the library */
 library.add(faCaretLeft, faCaretRight, faCaretDown, faCaretUp, faGear, faPlus, faMinus, faFlagCheckered, faCheck, faXmark, faArrowDownUpAcrossLine);
@@ -36,6 +37,7 @@ const router = createRouter({
     routes: [
         { path: '/', component: StartPage },
         { path: '/login', component: LoginPage},
+        { path: '/scoreboard', component: ScoreboardPage },
         { path: '/editor/:parcourId', component: EditPage, props: true },
         { path: '/competition/:id', component: CompetitionPage, props: true },
         { path: '/competition/:competitionId/schedule/:scheduleId', component: SchedulePage, props: true }
@@ -44,7 +46,7 @@ const router = createRouter({
 
 router.beforeEach(async (to) => {
     console.log("beforeEach for " + to.path )
-    const publicPages = ['/login']
+    const publicPages = ['/login', '/scoreboard']
     const authRequired = !publicPages.includes(to.path)
 
     if( !authRequired ) {

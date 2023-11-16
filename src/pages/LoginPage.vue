@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-screen bg-red-500">
-    <div class="min-h-screen flex items-center justify-center bg-gray-100">
+    <div class="min-h-screen flex flex-col items-center justify-center bg-gray-100">
 
       <!-- Title -->
       <div class="absolute top-0 left-0 right-0 text-center mt-24">
@@ -20,6 +20,12 @@
         </div>
         <button class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" @click="login">Login</button>
       </div>
+
+      <router-link to="/scoreboard">
+        <div class="mt-4 text-blue-400 cursor-pointer hover:text-blue-800">
+          &gt; Zum Scoreboard &lt;
+        </div>
+      </router-link>
 
     </div>
   </div>

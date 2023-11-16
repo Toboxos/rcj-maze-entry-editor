@@ -10,7 +10,6 @@ watch(competitions, (newValue, _) => {
 
 async function fetchCompetitions() {
     const result = await API.axios.get('/competitions')
-    console.log(result.data)
     return result.data
 }
 
