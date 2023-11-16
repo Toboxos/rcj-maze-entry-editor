@@ -2,12 +2,48 @@ import express from 'express'
 import bodyParser from "body-parser";
 import sqlite3 from "sqlite3"
 import cors from "cors"
+import bcrypt from "bcrypt";
+import session from "express-session"
 
 sqlite3.verbose()
 const db = new sqlite3.Database('database.db')
 const app = express();
 app.use(bodyParser.json())
 app.use(cors())
+app.use(session({secret: "secret", resave: false, saveUninitialized: true}))
+
+function isAuthenticated(req, res, next) {
+    if (req.session.userId) {
+        next();
+    } else {
+        res.status(401).send('Not authenticated');
+    }
+}
+
+app.post("/login", (req, res) => {
+    const { username, password } = req.body;
+
+    db.get("SELECT id, password FROM users WHERE username = ?", username, async (err, row) => {
+        if( err ) {
+            res.status(401).send('Invalid credentials');
+            return
+        }
+
+        bcrypt.compare(password, row.password, (err, authorized) => {
+            if( !authorized ) {
+                res.status(401).send('Invalid credentials');
+                return
+            }
+
+            req.session.userId = row.id; // Create a session
+            res.status(200).send('Logged in!');
+        })
+    })
+})
+
+app.get("/authorized", isAuthenticated, (req, res) => {
+    res.status(200).send()
+})
 
 app.get("/parcours", (req, res) => {
     db.all(`SELECT * FROM parcours`, (err, rows) => {
