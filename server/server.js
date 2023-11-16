@@ -56,6 +56,19 @@ app.get("/authorized", isAuthenticated, (req, res) => {
     res.status(200).send()
 })
 
+app.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            // Handle error - you might want to log it and/or send a response to the user
+            console.error("Error in destroying session: ", err);
+            res.status(500).send('Error logging out');
+        } else {
+            // Redirect to login page or send a success response
+            res.status(200).send('Logged out');
+        }
+    });
+});
+
 app.get("/parcours", (req, res) => {
     db.all(`SELECT * FROM parcours`, (err, rows) => {
         res.send(rows)
