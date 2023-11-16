@@ -5,11 +5,22 @@ import cors from "cors"
 import bcrypt from "bcrypt";
 import session from "express-session"
 
+const corsOptionsDelegate = function (req, callback) {
+    var corsOptions;
+    if (req.header('Origin')) {
+        // Reflect the request origin as the allowed origin
+        corsOptions = { origin: req.header('Origin'), credentials: true };
+    } else {
+        corsOptions = { origin: false }; // Disable CORS for this request
+    }
+    callback(null, corsOptions); // Callback expects two parameters: error and options
+};
+
 sqlite3.verbose()
 const db = new sqlite3.Database('database.db')
 const app = express();
 app.use(bodyParser.json())
-app.use(cors())
+app.use(cors(corsOptionsDelegate))
 app.use(session({secret: "secret", resave: false, saveUninitialized: true}))
 
 function isAuthenticated(req, res, next) {
