@@ -1,6 +1,11 @@
 <template>
-  <div class="p-2">
+  <div class="p-4 text-right">
+    <button @click="logout" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+      Logout
+    </button>
+  </div>
 
+  <div class="p-2">
     <!-- Competitions -->
     <div>Competitions:</div>
     <div class="p-2 border-2 border-black flex flex-col">
@@ -37,6 +42,7 @@ import {reactive} from "vue";
 import {useParcours, addParcour, deleteParcour} from "../stores/Parcours.js";
 import {useCompetitions, addCompetition, deleteCompetition} from "../stores/competitions.js";
 import {useRouter} from "vue-router";
+import {API} from "../api.js";
 
 const router = useRouter();
 const parcours = useParcours();
@@ -82,5 +88,9 @@ function downloadParcour(parcour) {
 
 function editCompetition(competition) {
   router.push('/competition/' + competition.id);
+}
+
+function logout() {
+  API.axios.get("logout").finally(() => router.push("/login"))
 }
 </script>
